@@ -1012,7 +1012,7 @@ STRUCT_RETURN_WITH_ENV
 
 DEFINE_FUNC(void, 1destroy_1model) WITH_ONE_ARG(jmodel)
 MODEL_ARG(1)
-VOID_CALL1(void, destroy_model)
+VOID_CALL1(destroy_model)
 
 DEFINE_FUNC(jmodel, 1get_1model) WITH_ONE_ARG(jenv)
 ENV_ARG(1)
