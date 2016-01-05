@@ -1,0 +1,8 @@
+org.sosy_lab.solver
+org.sosy_lab.solver.api
+org.sosy_lab.solver.basicimpl
+org.sosy_lab.solver.basicimpl.tactics
+org.sosy_lab.solver.cvc4
+org.sosy_lab.solver.logging
+org.sosy_lab.solver.test
+org.sosy_lab.solver.visitors
