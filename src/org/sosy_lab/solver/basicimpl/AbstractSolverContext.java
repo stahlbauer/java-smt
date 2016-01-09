@@ -1,5 +1,6 @@
 package org.sosy_lab.solver.basicimpl;
 
+import org.sosy_lab.common.ShutdownNotifier;
 import org.sosy_lab.common.configuration.Configuration;
 import org.sosy_lab.common.configuration.InvalidConfigurationException;
 import org.sosy_lab.common.configuration.Option;
@@ -31,16 +32,18 @@ public abstract class AbstractSolverContext implements SolverContext {
 
   @Override
   public final ProverEnvironment newProverEnvironment(
-      boolean generateModels, boolean generateUnsatCore) {
-    ProverEnvironment pe = newProverEnvironment0(generateModels, generateUnsatCore);
+      ShutdownNotifier pNotifier, boolean pGenerateModels, boolean pGenerateUnsatCore) {
+
+    ProverEnvironment pe = newProverEnvironment0(pNotifier, pGenerateModels, pGenerateUnsatCore);
     if (useLogger) {
       pe = new LoggingProverEnvironment(logger, pe);
     }
+
     return pe;
   }
 
   public abstract ProverEnvironment newProverEnvironment0(
-      boolean generateModels, boolean generateUnsatCore);
+      ShutdownNotifier pNotifier, boolean generateModels, boolean generateUnsatCore);
 
   @Override
   public final InterpolatingProverEnvironment<?> newProverEnvironmentWithInterpolation() {

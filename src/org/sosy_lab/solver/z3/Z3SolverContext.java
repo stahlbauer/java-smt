@@ -249,8 +249,9 @@ public final class Z3SolverContext extends AbstractSolverContext {
 
   @Override
   public ProverEnvironment newProverEnvironment0(
+      ShutdownNotifier pNotifier,
       boolean generateModels, boolean generateUnsatCore) {
-    return new Z3TheoremProver(creator, manager, z3params, shutdownNotifier, generateUnsatCore);
+    return new Z3TheoremProver(creator, manager, z3params, pNotifier, generateUnsatCore);
   }
 
   @Override

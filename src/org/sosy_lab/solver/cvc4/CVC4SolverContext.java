@@ -64,6 +64,7 @@ class CVC4SolverContext extends AbstractSolverContext {
 
   @Override
   public ProverEnvironment newProverEnvironment0(
+      ShutdownNotifier pNotifier,
       boolean pGenerateModels, boolean pGenerateUnsatCore) {
     return new CVC4TheoremProver(manager);
   }

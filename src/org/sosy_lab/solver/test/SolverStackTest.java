@@ -31,6 +31,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+import org.sosy_lab.common.ShutdownNotifier;
 import org.sosy_lab.common.UniqueIdGenerator;
 import org.sosy_lab.solver.AssignableTerm.Function;
 import org.sosy_lab.solver.AssignableTerm.Variable;
@@ -83,7 +84,7 @@ public class SolverStackTest extends SolverBasedTest0 {
     if (useInterpolatingEnvironment) {
       return context.newProverEnvironmentWithInterpolation();
     } else {
-      return context.newProverEnvironment(true, generateUnsatCore);
+      return context.newProverEnvironment(ShutdownNotifier.createDummy(), true, generateUnsatCore);
     }
   }
 

@@ -1,5 +1,7 @@
 package org.sosy_lab.solver.api;
 
+import org.sosy_lab.common.ShutdownNotifier;
+
 /**
  * Instances of this interface provide access to an SMT solver.
  * A single formula manager encapsulates a single solver context, and thus
@@ -21,12 +23,13 @@ public interface SolverContext extends AutoCloseable {
   /**
    * Create a fresh new {@link ProverEnvironment} which encapsulates an assertion stack
    * and can be used to check formulas for unsatisfiability.
-   * @param generateModels Whether the solver should generate models (i.e., satisfying assignments)
+   * @param pNotifier A notifier that informs when (or if) a solver query should get interrupted.
+   * @param pGenerateModels Whether the solver should generate models (i.e., satisfying assignments)
    *     for satisfiable formulas.
-   * @param generateUnsatCore Whether the solver should generate an unsat core
+   * @param pGenerateUnsatCore Whether the solver should generate an unsat core
    *     for unsatisfiable formulas.
    */
-  ProverEnvironment newProverEnvironment(boolean generateModels, boolean generateUnsatCore);
+  ProverEnvironment newProverEnvironment(ShutdownNotifier pNotifier, boolean pGenerateModels, boolean pGenerateUnsatCore);
 
   /**
    * Create a fresh new {@link InterpolatingProverEnvironment} which encapsulates an assertion stack
@@ -53,5 +56,6 @@ public interface SolverContext extends AutoCloseable {
    * Necessary for solvers implemented in native code, frees the associated
    * memory.
    */
+  @Override
   void close();
 }

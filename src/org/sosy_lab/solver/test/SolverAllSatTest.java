@@ -31,6 +31,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+import org.sosy_lab.common.ShutdownNotifier;
 import org.sosy_lab.solver.SolverContextFactory.Solvers;
 import org.sosy_lab.solver.SolverException;
 import org.sosy_lab.solver.api.BooleanFormula;
@@ -61,7 +62,7 @@ public class SolverAllSatTest extends SolverBasedTest0 {
 
   @Before
   public void setupEnvironment() {
-    env = context.newProverEnvironment(false, false);
+    env = context.newProverEnvironment(ShutdownNotifier.createDummy(), false, false);
   }
 
   @After

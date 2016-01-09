@@ -220,9 +220,10 @@ public final class Mathsat5SolverContext extends AbstractSolverContext {
   }
 
   @Override
-  public ProverEnvironment newProverEnvironment0(
+  public ProverEnvironment newProverEnvironment0(ShutdownNotifier pNotifier,
       boolean pGenerateModels, boolean pGenerateUnsatCore) {
-    return new Mathsat5TheoremProver(this, pGenerateModels, pGenerateUnsatCore, shutdownNotifier);
+
+    return new Mathsat5TheoremProver(this, pGenerateModels, pGenerateUnsatCore, pNotifier);
   }
 
   @Override

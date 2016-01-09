@@ -94,8 +94,10 @@ public final class PrincessSolverContext extends AbstractSolverContext {
 
   @Override
   public ProverEnvironment newProverEnvironment0(
+      ShutdownNotifier pNotifier,
       boolean pGenerateModels, boolean pGenerateUnsatCore) {
-    return new PrincessTheoremProver(manager, shutdownNotifier);
+
+    return new PrincessTheoremProver(manager, pNotifier);
   }
 
   @Override

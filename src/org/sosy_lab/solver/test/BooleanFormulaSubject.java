@@ -28,6 +28,7 @@ import com.google.common.truth.TestVerb;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import org.sosy_lab.common.ShutdownNotifier;
 import org.sosy_lab.solver.Model;
 import org.sosy_lab.solver.SolverException;
 import org.sosy_lab.solver.api.BooleanFormula;
@@ -73,7 +74,8 @@ public class BooleanFormulaSubject extends Subject<BooleanFormulaSubject, Boolea
 
   private void checkIsUnsat(final BooleanFormula subject, final String verb, final Object expected)
       throws SolverException, InterruptedException {
-    try (final ProverEnvironment prover = context.newProverEnvironment(true, false)) {
+
+    try (final ProverEnvironment prover = context.newProverEnvironment(ShutdownNotifier.createDummy(), true, false)) {
       prover.push(subject);
       if (prover.isUnsat()) {
         return; // success
@@ -110,7 +112,7 @@ public class BooleanFormulaSubject extends Subject<BooleanFormulaSubject, Boolea
       failWithBadResults("is", "satisfiable", "is", "trivially unsatisfiable");
     }
 
-    try (ProverEnvironment prover = context.newProverEnvironment(false, true)) {
+    try (ProverEnvironment prover = context.newProverEnvironment(ShutdownNotifier.createDummy(), false, true)) {
       prover.push(getSubject());
       if (!prover.isUnsat()) {
         return; // success
