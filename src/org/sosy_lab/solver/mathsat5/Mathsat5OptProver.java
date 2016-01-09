@@ -19,6 +19,7 @@ import static org.sosy_lab.solver.mathsat5.Mathsat5NativeApi.msat_set_model;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableMap;
 
+import org.sosy_lab.common.ShutdownNotifier;
 import org.sosy_lab.common.UniqueIdGenerator;
 import org.sosy_lab.common.rationals.Rational;
 import org.sosy_lab.solver.Model;
@@ -56,8 +57,8 @@ class Mathsat5OptProver extends Mathsat5AbstractProver<Void> implements OptEnvir
    */
   private final Deque<ImmutableMap<Integer, Integer>> stack;
 
-  Mathsat5OptProver(Mathsat5SolverContext pMgr) {
-    super(pMgr, createConfig());
+  Mathsat5OptProver(Mathsat5SolverContext pMgr, ShutdownNotifier pNotifier) {
+    super(pMgr, createConfig(), pNotifier);
     objectiveMap = new HashMap<>();
     stack = new ArrayDeque<>();
   }

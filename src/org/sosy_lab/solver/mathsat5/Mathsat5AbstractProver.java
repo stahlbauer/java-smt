@@ -34,6 +34,7 @@ import static org.sosy_lab.solver.mathsat5.Mathsat5NativeApi.msat_set_option_che
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 
+import org.sosy_lab.common.ShutdownNotifier;
 import org.sosy_lab.solver.Model;
 import org.sosy_lab.solver.SolverException;
 import org.sosy_lab.solver.api.BasicProverEnvironment;
@@ -48,17 +49,21 @@ import java.util.Map.Entry;
  */
 abstract class Mathsat5AbstractProver<T2> implements BasicProverEnvironment<T2> {
 
+  protected final ShutdownNotifier shutdownNotifier;
   protected final Mathsat5SolverContext context;
   protected final long curEnv;
   private final long curConfig;
   private final long terminationTest;
   protected boolean closed = false;
 
-  protected Mathsat5AbstractProver(Mathsat5SolverContext pContext, Map<String, String> pConfig) {
+  protected Mathsat5AbstractProver(Mathsat5SolverContext pContext, Map<String, String> pConfig,
+      ShutdownNotifier pNotifier) {
+
+    shutdownNotifier = pNotifier;
     context = pContext;
     curConfig = buildConfig(pConfig);
     curEnv = context.createEnvironment(curConfig);
-    terminationTest = context.addTerminationTest(curEnv);
+    terminationTest = context.addTerminationTest(curEnv, pNotifier);
   }
 
   private long buildConfig(Map<String, String> pConfig) {

@@ -33,6 +33,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Longs;
 
+import org.sosy_lab.common.ShutdownNotifier;
 import org.sosy_lab.solver.SolverException;
 import org.sosy_lab.solver.api.BooleanFormula;
 import org.sosy_lab.solver.api.InterpolatingProverEnvironmentWithAssumptions;
@@ -44,8 +45,8 @@ import java.util.Set;
 class Mathsat5InterpolatingProver extends Mathsat5AbstractProver<Integer>
     implements InterpolatingProverEnvironmentWithAssumptions<Integer> {
 
-  Mathsat5InterpolatingProver(Mathsat5SolverContext pMgr) {
-    super(pMgr, createConfig());
+  Mathsat5InterpolatingProver(Mathsat5SolverContext pMgr, ShutdownNotifier pNotifier) {
+    super(pMgr, createConfig(), pNotifier);
   }
 
   private static Map<String, String> createConfig() {

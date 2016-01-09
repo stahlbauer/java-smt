@@ -228,12 +228,12 @@ public final class Mathsat5SolverContext extends AbstractSolverContext {
 
   @Override
   public InterpolatingProverEnvironment<?> newProverEnvironmentWithInterpolation0() {
-    return new Mathsat5InterpolatingProver(this);
+    return new Mathsat5InterpolatingProver(this, shutdownNotifier);
   }
 
   @Override
   public OptEnvironment newOptEnvironment() {
-    return new Mathsat5OptProver(this);
+    return new Mathsat5OptProver(this, shutdownNotifier);
   }
 
   @Override
@@ -250,5 +250,16 @@ public final class Mathsat5SolverContext extends AbstractSolverContext {
 
   long addTerminationTest(long env) {
     return msat_set_termination_test(env, terminationTest);
+  }
+
+  long addTerminationTest(long env, final ShutdownNotifier pNotifier) {
+    return msat_set_termination_test(env, new TerminationTest() {
+
+      @Override
+      public boolean shouldTerminate() throws InterruptedException {
+        pNotifier.shutdownIfNecessary();
+        return false;
+      }
+    });
   }
 }
