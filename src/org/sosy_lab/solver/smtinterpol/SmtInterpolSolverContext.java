@@ -67,7 +67,7 @@ class SmtInterpolSolverContext extends AbstractSolverContext {
   public ProverEnvironment newProverEnvironment0(ShutdownNotifier pNotifier,
       boolean pGenerateModels, boolean pGenerateUnsatCore) {
 
-    return environment.createProver(manager);
+    return environment.createProver(manager, pNotifier);
   }
 
   @Override

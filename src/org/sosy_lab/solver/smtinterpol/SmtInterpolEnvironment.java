@@ -253,12 +253,12 @@ class SmtInterpolEnvironment {
     return new SmtInterpolInterpolatingProver(mgr);
   }
 
-  SmtInterpolTheoremProver createProver(SmtInterpolFormulaManager mgr) {
+  SmtInterpolTheoremProver createProver(SmtInterpolFormulaManager mgr, ShutdownNotifier pNotifier) {
     checkState(
         stackDepth == 0,
         "Not allowed to create a new prover environment while solver stack is still non-empty, "
             + "parallel stacks are not supported.");
-    return new SmtInterpolTheoremProver(mgr);
+    return new SmtInterpolTheoremProver(mgr, pNotifier);
   }
 
   /** Parse a String to Terms and Declarations.

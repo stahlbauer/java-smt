@@ -27,6 +27,7 @@ import com.google.common.collect.Lists;
 
 import de.uni_freiburg.informatik.ultimate.logic.Term;
 
+import org.sosy_lab.common.ShutdownNotifier;
 import org.sosy_lab.solver.Model;
 import org.sosy_lab.solver.SolverException;
 import org.sosy_lab.solver.api.BooleanFormula;
@@ -41,6 +42,7 @@ import javax.annotation.Nullable;
 
 class SmtInterpolTheoremProver implements ProverEnvironment {
 
+  private final ShutdownNotifier notifier;
   private final SmtInterpolFormulaManager mgr;
   private final SmtInterpolEnvironment env;
   private final List<Term> assertedTerms;
@@ -54,8 +56,9 @@ class SmtInterpolTheoremProver implements ProverEnvironment {
         }
       };
 
-  SmtInterpolTheoremProver(SmtInterpolFormulaManager pMgr) {
+  SmtInterpolTheoremProver(SmtInterpolFormulaManager pMgr, ShutdownNotifier pNotifier) {
     mgr = pMgr;
+    notifier = pNotifier;
     assertedTerms = new ArrayList<>();
     env = mgr.createEnvironment();
     checkNotNull(env);
@@ -133,6 +136,7 @@ class SmtInterpolTheoremProver implements ProverEnvironment {
       importantTerms[i++] = mgr.extractInfo(impF);
     }
     for (Term[] model : env.checkAllSat(importantTerms)) {
+      notifier.shutdownIfNecessary();
       callback.apply(Lists.transform(Arrays.asList(model), encapsulateBoolean));
     }
     return callback.getResult();
